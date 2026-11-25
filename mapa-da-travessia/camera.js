@@ -11,6 +11,13 @@
   const controleSinal = document.querySelector('#controle-do-sinal');
   const luzSimulada = document.querySelector('#luz-simulada');
 
+  const tema = getComputedStyle(document.documentElement);
+  const fundoDaLegenda = tema.getPropertyValue('--fundo').trim() || '#0f172a';
+  const coresDaLegenda = {
+    Vermelho: tema.getPropertyValue('--texto-vermelho').trim() || '#ff6b6b',
+    Verde: tema.getPropertyValue('--texto-verde').trim() || '#4ade80'
+  };
+
   const recorte = { x: 120, y: 76, w: 400, h: 328 };
   const amostra = document.createElement('canvas');
   amostra.width = 200;
@@ -68,9 +75,9 @@
     contexto.lineWidth = 2;
     contexto.strokeStyle = '#fff';
     contexto.strokeRect(x - 3, y - 3, w + 6, h + 6);
-    contexto.fillStyle = sinal.estado === 'Vermelho' ? '#a41f2b' : '#17623c';
+    contexto.fillStyle = fundoDaLegenda;
     contexto.fillRect(legendaX, legendaY, largura, 28);
-    contexto.fillStyle = '#fff';
+    contexto.fillStyle = coresDaLegenda[sinal.estado];
     contexto.fillText(sinal.estado, legendaX + 10, legendaY + 20);
   }
 
