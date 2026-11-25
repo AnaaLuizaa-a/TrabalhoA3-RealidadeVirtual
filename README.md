@@ -23,13 +23,17 @@ Este projeto propõe um **ciclo complementar de segurança viária** dividido em
 ## 📂 Estrutura de Pastas do Repositório
 
 ```text
+├── README.md
 ├── index.html
-├── css/style.css
-├── js/
-│   ├── navegacao.js
-│   ├── simulador-rv.js
-│   └── assistente-ra.js
-├── fundamentacao-teorica.md
+├── docs/
+│   └── fundamentacao-teorica.md
+├── travessia-segura/
+│   ├── index.html
+│   ├── css/style.css
+│   └── js/
+│       ├── navegacao.js
+│       ├── simulador-rv.js
+│       └── assistente-ra.js
 └── mapa-da-travessia/
     ├── index.html
     ├── sinal-teste.html
@@ -39,9 +43,11 @@ Este projeto propõe um **ciclo complementar de segurança viária** dividido em
     └── vendor/
 ```
 
-O [`index.html`](index.html) contém o menu e as duas telas da Travessia Segura. O [CSS](css/style.css) dá forma à cena e aos alertas. [Navegação](js/navegacao.js) troca a tela, [simulador](js/simulador-rv.js) move o carro e calcula o resultado, e [assistente](js/assistente-ra.js) abre a câmera e alterna os alertas.
+O [`index.html` da raiz](index.html) abre a Travessia Segura. O [HTML do protótipo](travessia-segura/index.html) contém o menu e as duas telas. O [CSS](travessia-segura/css/style.css) dá forma à cena e aos alertas. [Navegação](travessia-segura/js/navegacao.js) troca a tela, [simulador](travessia-segura/js/simulador-rv.js) move o carro e calcula o resultado, e [assistente](travessia-segura/js/assistente-ra.js) abre a câmera e alterna os alertas.
 
 O [README do Mapa](mapa-da-travessia/README.md) indica os arquivos do percurso, da câmera, do reconhecimento e do semáforo de teste. `assets/` guarda os dados das fotos e `vendor/` guarda a biblioteca A-Frame e sua licença.
+
+A [fundamentação teórica](docs/fundamentacao-teorica.md) fica em `docs/`.
 
 ## Como abrir
 
