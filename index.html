@@ -4,11 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Travessia Segura: Protótipo RV & RA</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/navegacao.js"></script>
+  <script defer src="js/simulador-rv.js"></script>
+  <script defer src="js/assistente-ra.js"></script>
 </head>
 <body>
 
-  <!-- TELA 1: MENU PRINCIPAL -->
+  <!-- menu -->
   <main id="screen-menu" class="screen active">
     <div class="card">
       <span class="badge">Protótipo Acadêmico • Segurança Viária</span>
@@ -37,14 +40,13 @@
     </div>
   </main>
 
-  <!-- TELA 2: SIMULADOR DE REALIDADE VIRTUAL (100% NA TELA DO CELULAR) -->
+  <!-- simulador de travessia -->
   <section id="screen-vr" class="screen">
     <div class="hud-top">
       <button type="button" id="btn-back-vr" class="btn-small">← Voltar</button>
       <div class="status-pill" id="vr-timer">Observação: 0.0s</div>
     </div>
 
-    <!-- Cenário Virtual Interativo (Perspectiva do Pedestre) -->
     <div class="vr-viewport">
       <div class="vr-sky">
         <div class="vr-buildings"></div>
@@ -54,7 +56,6 @@
         <div class="vr-crosswalk">
           <span></span><span></span><span></span><span></span>
         </div>
-        <!-- Carro animado via JS -->
         <div id="vr-car" class="vr-car">🚗</div>
       </div>
       <div class="vr-sidewalk-near">
@@ -67,7 +68,6 @@
       <button type="button" id="btn-cross" class="btn btn-action">ATRAVESSAR FAIXA AGORA</button>
     </div>
 
-    <!-- Modal de Resultado -->
     <div id="vr-result-modal" class="modal hidden">
       <div class="modal-content">
         <h2 id="vr-result-title">Resultado</h2>
@@ -87,7 +87,7 @@
     </div>
   </section>
 
-  <!-- TELA 3: ASSISTENTE DE REALIDADE AUMENTADA (CÂMERA DO CELULAR) -->
+  <!-- camera e alertas -->
   <section id="screen-ar" class="screen">
     <video id="ar-video" autoplay playsinline muted></video>
     <div id="ar-fallback-bg" class="ar-fallback hidden">
@@ -97,10 +97,9 @@
     <div class="ar-overlay" id="ar-overlay">
       <div class="hud-top">
         <button type="button" id="btn-back-ar" class="btn-small">← Voltar</button>
-        <div class="status-pill">RA Ativa • Câmera</div>
+        <div class="status-pill">Demonstração de RA</div>
       </div>
 
-      <!-- Projeção Virtual da Faixa na Câmera -->
       <div class="ar-crosswalk-guide">
         <div class="ar-lane" id="ar-lane">
           <div class="ar-stripes">
@@ -111,14 +110,13 @@
           <span class="ar-icon" id="ar-icon">✅</span>
           <div>
             <strong id="ar-title">TRAVESSIA SEGURA</strong>
-            <p id="ar-desc">Via monitorada. Nenhum veículo em risco.</p>
+            <p id="ar-desc">Simulação de via livre.</p>
           </div>
         </div>
       </div>
 
-      <!-- Controles para demonstrar ao professor -->
       <div class="ar-sim-controls">
-        <p class="sim-label">Simular detecção da câmera (Apresentação):</p>
+        <p class="sim-label">Simular alerta de trânsito:</p>
         <div class="sim-buttons">
           <button type="button" id="btn-sim-safe" class="btn-sim safe active">Via Livre</button>
           <button type="button" id="btn-sim-danger" class="btn-sim danger">⚠️ Carro em Alta Velocidade</button>
@@ -127,6 +125,5 @@
     </div>
   </section>
 
-  <script src="script.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Tema adaptado de https://github.com/AnaaLuizaa-a/TrabalhoA3-RealidadeVirtual/blob/main/style.css */
+/* cores e base da pagina */
 :root {
   color-scheme: dark;
   --fundo: #0f172a;
@@ -24,16 +24,6 @@ body {
   background: radial-gradient(circle at top, var(--painel), var(--fundo));
 }
 
-body[data-sinal="vermelho"] {
-  --texto-sinal: var(--texto-vermelho);
-  background: #aa1729;
-}
-
-body[data-sinal="verde"] {
-  --texto-sinal: var(--texto-verde);
-  background: #17623c;
-}
-
 main {
   max-width: 900px;
   margin: 0 auto;
@@ -44,23 +34,53 @@ main {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-body[data-sinal] main {
-  background: rgba(15, 23, 42, 0.24);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
 h1 { margin: 0; font-size: 1.8rem; line-height: 1.2; }
 h2 { margin: 16px 0 8px; font-size: 1.15rem; }
 p { color: var(--texto-secundario); }
 a { color: var(--azul); }
-body[data-sinal] p,
-body[data-sinal] a { color: var(--texto); }
+
+/* botoes e foco */
+button { font: inherit; cursor: pointer; touch-action: manipulation; }
 
 :is(button, a, select):focus-visible {
   outline: 3px solid var(--texto);
   outline-offset: 2px;
 }
 
+.modos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.modos button, #controles-da-foto button, select {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--borda-controle);
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--texto);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+#ver-percurso[aria-pressed="true"], #simular-camera {
+  border-color: var(--azul);
+  background: #075985;
+}
+
+#ver-camera[aria-pressed="true"], #abrir-webcam {
+  border-color: var(--verde);
+  background: #065f46;
+}
+
+.modos button:active, #controles-da-foto button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* foto 360 */
 .visor {
   position: relative;
   height: clamp(255px, 52vh, 400px);
@@ -100,6 +120,7 @@ body[data-sinal] a { color: var(--texto); }
   cursor: default;
 }
 
+/* minimapa */
 .mapa {
   position: relative;
   display: grid;
@@ -149,8 +170,6 @@ body[data-sinal] a { color: var(--texto); }
   background: var(--azul);
 }
 
-button { font: inherit; cursor: pointer; touch-action: manipulation; }
-
 .ponto-mapa {
   position: relative;
   width: 100%;
@@ -194,38 +213,24 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .creditos { font-size: .875rem; }
 .creditos:last-child { margin-bottom: 0; }
 
-.modos {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0;
+/* camera e semaforo */
+body[data-sinal="vermelho"] {
+  --texto-sinal: var(--texto-vermelho);
+  background: #aa1729;
 }
 
-.modos button, #controles-da-foto button, select {
-  min-height: 44px;
-  padding: 10px 14px;
-  border: 1px solid var(--borda-controle);
-  border-radius: 10px;
-  font: inherit;
-  font-weight: 600;
-  color: var(--texto);
-  background: rgba(15, 23, 42, 0.9);
+body[data-sinal="verde"] {
+  --texto-sinal: var(--texto-verde);
+  background: #17623c;
 }
 
-#ver-percurso[aria-pressed="true"], #simular-camera {
-  border-color: var(--azul);
-  background: #075985;
+body[data-sinal] main {
+  background: rgba(15, 23, 42, 0.24);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
-#ver-camera[aria-pressed="true"], #abrir-webcam {
-  border-color: var(--verde);
-  background: #065f46;
-}
-
-.modos button:active, #controles-da-foto button:not(:disabled):active {
-  transform: scale(0.97);
-}
+body[data-sinal] p,
+body[data-sinal] a { color: var(--texto); }
 
 body[data-sinal] #status-ra {
   width: fit-content;

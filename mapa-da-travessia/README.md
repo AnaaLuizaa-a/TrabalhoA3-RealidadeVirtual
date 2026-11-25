@@ -7,8 +7,10 @@ Abra [index.html](index.html) no Chrome e escolha **Percurso 360°** ou **Câmer
 
 ## Como funciona
 
-- `trajeto.js` aplica, na esfera `<a-sky>` do A-Frame, a foto selecionada e sincroniza o minimapa. `assets/panorama.js` incorpora os JPEGs para a página abrir sem servidor.
-- `camera.js` captura os quadros e desenha a sobreposição quando a cor aparece na mesma região em dois quadros seguidos. `reconhecer-sinal.js` agrupa pixels vermelhos ou verdes vizinhos e confere se há fundo escuro ao redor. Se a leitura ficar ambígua, o resultado é inconclusivo. O código de RA do professor serviu de referência para o fluxo de captura, reconhecimento e integração com a RV.
+- [index.html](index.html) tem o visor 360°, o minimapa e os controles da câmera. [estilo.css](css/estilo.css) cuida das cores, do layout e das mudanças visuais quando uma luz é reconhecida.
+- [percurso.js](js/percurso.js) aplica, na esfera `<a-sky>` do A-Frame, a foto selecionada e sincroniza o minimapa. `assets/panorama.js` incorpora os JPEGs para a página abrir sem servidor. `vendor/` contém o A-Frame e sua licença.
+- [camera.js](js/camera.js) captura os quadros e desenha a sobreposição quando a cor aparece na mesma região em dois quadros seguidos. [reconhecer-sinal.js](js/reconhecer-sinal.js) agrupa pixels vermelhos ou verdes vizinhos e confere se há fundo escuro ao redor. Se a leitura ficar ambígua, o resultado é inconclusivo. O código de RA do professor serviu de referência para esse fluxo.
+- [desenhar-semaforo.js](js/desenhar-semaforo.js) desenha o semáforo usado na simulação e no cartão de teste. [cartao-teste.js](js/cartao-teste.js) atualiza o cartão quando a luz selecionada muda.
 
 ## Créditos das fotos
 
@@ -26,7 +28,8 @@ Fotos de **Carto'Cité**, capturadas em **17/10/2023**, via Panoramax (OpenStree
 
 ## Referências
 
-- [Enunciado da A3](../PDFs/Trabalho_A3_20261115155746.pdf)
+- Enunciado da A3 fornecido na disciplina.
 - [Ambiente 360° do professor](https://github.com/otavianommonteiro/RealidadeVirtual/blob/main/ambiente360.html)
 - [Exemplo do professor que integra RA e RV](https://github.com/otavianommonteiro/RealidadeAumentada/blob/main/index.html)
 - [A-Frame 1.6.0](https://aframe.io/docs/1.6.0/introduction/), [licença MIT](vendor/aframe-LICENSE.txt)
+- [CSS original da Travessia Segura](https://github.com/AnaaLuizaa-a/TrabalhoA3-RealidadeVirtual/blob/232cea5b36ff69512f601e14ee47bd9c5e5869d3/style.css), referência para o tema do Mapa.

@@ -13,20 +13,21 @@ const panorama = document.querySelector('#panorama');
 const statusDoPonto = document.querySelector('#nome-do-ponto');
 const mensagemCena = document.querySelector('#mensagem-cena');
 const mapa = document.querySelector('.mapa');
-const botoesMapa = [];
 const voltarNaFoto = document.querySelector('#voltar-na-foto');
 const avancarNaFoto = document.querySelector('#avancar-na-foto');
 const controlesDaFoto = document.querySelector('#controles-da-foto');
 const numeroDaFoto = document.querySelector('#numero-da-foto');
+
+const botoesMapa = [];
 let fotoAtual = 0;
 
+// atualiza a foto da esfera e a posicao no minimapa
 function mostrarFoto(indice) {
   const ponto = pontos[indice];
   if (!ponto) return;
   botoesMapa[fotoAtual].removeAttribute('aria-current');
   fotoAtual = indice;
 
-  // A câmera fica no centro da esfera. Trocar a textura muda a vista do local.
   panorama.setAttribute('src', `#foto-${ponto.id}`);
   panorama.setAttribute('rotation', `0 ${ponto.rotacao} 0`);
   statusDoPonto.textContent = ponto.nome;
@@ -43,7 +44,13 @@ function mostrarControlesDaFoto() {
   controlesDaFoto.hidden = false;
 }
 
-if (window.AFRAME) {
+// monta as fotos e os botoes antes de abrir o percurso
+function prepararPercurso() {
+  if (!window.AFRAME) {
+    mensagemCena.textContent = 'A biblioteca A-Frame não carregou.';
+    return;
+  }
+
   for (const [indice, ponto] of pontos.entries()) {
     const imagem = document.createElement('img');
     imagem.id = `foto-${ponto.id}`;
@@ -71,6 +78,6 @@ if (window.AFRAME) {
   window.setTimeout(() => {
     if (!cena.renderStarted) mensagemCena.textContent = 'Não foi possível carregar a visualização 360°.';
   }, 8000);
-} else {
-  mensagemCena.textContent = 'A biblioteca A-Frame não carregou.';
 }
+
+prepararPercurso();

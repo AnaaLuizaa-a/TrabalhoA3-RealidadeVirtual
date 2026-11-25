@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Semáforo de teste</title>
-  <link rel="stylesheet" href="estilo.css">
-  <script defer src="sinal-teste.js"></script>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script defer src="js/desenhar-semaforo.js"></script>
+  <script defer src="js/cartao-teste.js"></script>
 </head>
 <body>
   <main>
@@ -22,19 +23,5 @@
       <a id="salvar-cartao" download="semaforo-de-teste.png">Salvar imagem</a>
     </p>
   </main>
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const canvas = document.querySelector('#cartao-teste');
-      const luz = document.querySelector('#luz-do-cartao');
-      const salvar = document.querySelector('#salvar-cartao');
-      function atualizarCartao() {
-        desenharSinalTeste(canvas.getContext('2d'), luz.value);
-        salvar.href = canvas.toDataURL('image/png');
-      }
-
-      luz.addEventListener('change', atualizarCartao);
-      atualizarCartao();
-    });
-  </script>
 </body>
 </html>

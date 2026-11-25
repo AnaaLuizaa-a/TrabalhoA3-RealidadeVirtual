@@ -2,42 +2,50 @@
 
 > **Protótipo Web Mobile-First e Fundamentação Teórica** desenvolvidos para investigação acadêmica sobre comportamento de risco urbano, ergonomia cognitiva e prevenção de atropelamentos.
 
+| Protótipo | O que dá para demonstrar |
+| --- | --- |
+| [Travessia Segura](https://anaaluizaa-a.github.io/TrabalhoA3-RealidadeVirtual/) | Cena de travessia, tempo de decisão e alertas acionados por botões sobre a câmera. |
+| [Mapa da travessia](https://anaaluizaa-a.github.io/TrabalhoA3-RealidadeVirtual/mapa-da-travessia/) | Percurso com sete fotos 360° e leitura da luz do semáforo pela câmera ou pelo semáforo de teste. |
+
 ---
 
 ## 🎯 Sobre o Projeto
 
 Atravessar a faixa de pedestres envolve processamento visual, espacial e tomada de decisão sob carga cognitiva. O uso de smartphones e a atenção dividida aumentam significativamente o risco de acidentes urbanos.
 
-Este projeto propõe um **ciclo complementar de segurança viária** dividido em dois módulos funcionais executáveis diretamente no navegador (WebXR / HTML5):
+Este projeto propõe um **ciclo complementar de segurança viária** dividido em dois módulos executáveis diretamente no navegador:
 
-1. **Módulo de Realidade Virtual (Diagnóstico e Treinamento):** Utiliza a biblioteca **A-Frame** para criar um ambiente 3D controlado e livre de risco físico. Permite medir o tempo de decisão do pedestre e avaliar sua percepção de distância e velocidade diante de um veículo em movimento.
-2. **Módulo de Realidade Aumentada (Intervenção e Suporte em Tempo Real):** Utiliza a câmera do dispositivo (`MediaDevices API`) combinada a uma interface de sobreposição contextual (*HUD / Nudging*). Exibe uma guia virtual da faixa e emite alertas visuais e táteis (vibração) imediatos quando um veículo se aproxima em velocidade crítica.
+1. **Realidade virtual.** Na Travessia Segura, o cenário é desenhado com HTML e CSS. O JavaScript move o carro e avalia a posição dele quando a pessoa decide atravessar. No Mapa, o A-Frame exibe as fotos 360° e o minimapa acompanha o ponto escolhido.
+2. **Realidade aumentada.** A câmera do dispositivo fornece a imagem. A Travessia Segura sobrepõe a faixa e oferece botões para simular os alertas. O Mapa lê a cor do semáforo e desenha a indicação sobre a imagem.
 
 ---
 
 ## 📂 Estrutura de Pastas do Repositório
 
 ```text
-projeto-travessia-segura-rv-ra/
-├── index.html                    # Página principal com Menu, Cena RV (A-Frame) e HUD RA
-├── style.css                     # Estilização responsiva (Mobile-First) e animações de alerta
-├── script.js                     # Lógica de simulação, cálculo de tempo de reação e câmera RA
-├── README.md                     # Documentação completa do projeto para o GitHub
-└── docs/
-    └── fundamentacao-teorica.md  # Texto acadêmico estruturado (Psicologia do Trânsito e Ergonomia)
+├── index.html
+├── css/style.css
+├── js/
+│   ├── navegacao.js
+│   ├── simulador-rv.js
+│   └── assistente-ra.js
+├── fundamentacao-teorica.md
+└── mapa-da-travessia/
+    ├── index.html
+    ├── sinal-teste.html
+    ├── css/estilo.css
+    ├── js/
+    ├── assets/
+    └── vendor/
 ```
 
----
+O [`index.html`](index.html) contém o menu e as duas telas da Travessia Segura. O [CSS](css/style.css) dá forma à cena e aos alertas. [Navegação](js/navegacao.js) troca a tela, [simulador](js/simulador-rv.js) move o carro e calcula o resultado, e [assistente](js/assistente-ra.js) abre a câmera e alterna os alertas.
 
-## 🚀 Como Executar e Hospedar no GitHub Pages
+O [README do Mapa](mapa-da-travessia/README.md) indica os arquivos do percurso, da câmera, do reconhecimento e do semáforo de teste. `assets/` guarda os dados das fotos e `vendor/` guarda a biblioteca A-Frame e sua licença.
 
-Como o módulo de Realidade Aumentada acessa a câmera do celular, os navegadores exigem conexão segura (**HTTPS**). O **GitHub Pages** fornece isso gratuitamente:
+## Como abrir
 
-1. Crie um novo repositório público no seu GitHub (ex: `travessia-segura-rv-ra`).
-2. Faça o upload de todos os arquivos desta pasta mantendo a estrutura original.
-3. No repositório, acesse **Settings** (Configurações) > **Pages** (no menu lateral esquerdo).
-4. Em **Source**, selecione `Deploy from a branch`, escolha a branch `main` e a pasta `/ (root)`, depois clique em **Save**.
-5. Aguarde cerca de 1 minuto e acesse o link gerado (ex: `https://seu-usuario.github.io/travessia-segura-rv-ra/`) diretamente pelo navegador do seu celular.
+Os links no início do README abrem as versões publicadas no GitHub Pages a partir da `main`. Para testar o código baixado, mantenha as pastas juntas e abra o `index.html` do protótipo no navegador. Para usar a câmera pelo link público, permita o acesso quando o navegador pedir.
 
 ---
 
@@ -53,5 +61,5 @@ Como o módulo de Realidade Aumentada acessa a câmera do celular, os navegadore
 
 * **HTML5 & CSS3** (Layout responsivo adaptado para smartphones)
 * **JavaScript (ES6+)** (Controle de estado, métricas de tempo e API de vibração)
-* **A-Frame (v1.5.0)** (Framework WebVR para renderização 3D e suporte a óculos VR)
+* **A-Frame 1.6.0** (Visualização das fotos 360° no Mapa da travessia)
 * **WebRTC / MediaDevices API** (Captura de vídeo em tempo real para sobreposição em RA)

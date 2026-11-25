@@ -4,6 +4,7 @@
   const verPercurso = document.querySelector('#ver-percurso');
   const verCamera = document.querySelector('#ver-camera');
   const abrirWebcam = document.querySelector('#abrir-webcam');
+  const simularCamera = document.querySelector('#simular-camera');
   const video = document.querySelector('#video-da-webcam');
   const quadro = document.querySelector('#quadro-ra');
   const contexto = quadro.getContext('2d');
@@ -33,20 +34,7 @@
     if (status.textContent !== mensagem) status.textContent = mensagem;
   }
 
-  function pararCamera() {
-    sessao++;
-    window.clearInterval(temporizador);
-    fluxo?.getTracks().forEach(track => track.stop());
-    fluxo = null;
-    video.srcObject = null;
-    ultimaLeitura = null;
-    delete document.body.dataset.sinal;
-    quadro.hidden = true;
-    controleSinal.hidden = true;
-    abrirWebcam.textContent = 'Abrir webcam';
-    informar('Escolha a fonte de imagem.');
-  }
-
+  // troca entre o percurso e a camera
   function trocarModo(modoRA) {
     painelRV.hidden = modoRA;
     painelRA.hidden = !modoRA;
@@ -60,6 +48,7 @@
     }
   }
 
+  // imagem da camera, semaforo de teste e avisos
   function desenharResultado(sinal) {
     const escalaX = recorte.w / amostra.width;
     const escalaY = recorte.h / amostra.height;
@@ -97,6 +86,34 @@
     contexto.restore();
   }
 
+  function desenharGuia() {
+    const { x, y, w, h } = recorte;
+    contexto.save();
+    contexto.strokeStyle = '#fff';
+    contexto.lineWidth = 2;
+    contexto.setLineDash([8, 5]);
+    contexto.strokeRect(x, y, w, h);
+    contexto.restore();
+  }
+
+  function mostrarLeitura(sinal) {
+    if (!sinal) {
+      delete document.body.dataset.sinal;
+      desenharGuia();
+      informar('Inconclusivo. Enquadre a luz e a moldura do semáforo.');
+      return;
+    }
+
+    const vermelho = sinal.estado === 'Vermelho';
+    document.body.dataset.sinal = sinal.estado.toLowerCase();
+    contexto.fillStyle = vermelho ? 'rgba(170, 23, 41, 0.66)' : 'rgba(23, 98, 60, 0.66)';
+    contexto.fillRect(0, 0, quadro.width, quadro.height);
+    desenharGuia();
+    desenharResultado(sinal);
+    informar(vermelho ? 'Vermelho. Aguarde.' : 'Verde.');
+  }
+
+  // leitura do recorte em dois quadros seguidos
   function confirmarLeitura(sinal) {
     const anterior = ultimaLeitura;
     ultimaLeitura = sinal;
@@ -112,63 +129,59 @@
     if (origem === 'webcam') desenharWebcam();
     else desenharSimulacao();
 
-    // Lê os pixels antes de desenhar a sobreposição, para a legenda não virar entrada da análise.
     const { x, y, w, h } = recorte;
     pixels.drawImage(quadro, x, y, w, h, 0, 0, amostra.width, amostra.height);
     const imagem = pixels.getImageData(0, 0, amostra.width, amostra.height);
     const sinal = confirmarLeitura(reconhecerSinal(imagem));
-    if (sinal) {
-      document.body.dataset.sinal = sinal.estado.toLowerCase();
-      contexto.fillStyle = sinal.estado === 'Vermelho'
-        ? 'rgba(170, 23, 41, 0.66)'
-        : 'rgba(23, 98, 60, 0.66)';
-      contexto.fillRect(0, 0, quadro.width, quadro.height);
-    } else {
-      delete document.body.dataset.sinal;
+    mostrarLeitura(sinal);
+  }
+
+  // abertura e fechamento da fonte de imagem
+  async function conectarWebcam(tentativa) {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error('A webcam precisa de uma página segura e de permissão.');
     }
 
-    contexto.save();
-    contexto.strokeStyle = '#fff';
-    contexto.lineWidth = 2;
-    contexto.setLineDash([8, 5]);
-    contexto.strokeRect(x, y, w, h);
-    contexto.restore();
-
-    if (sinal) {
-      desenharResultado(sinal);
-      informar(sinal.estado === 'Vermelho' ? 'Vermelho. Aguarde.' : 'Verde.');
-    } else {
-      informar('Inconclusivo. Enquadre a luz e a moldura do semáforo.');
+    const capturado = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 640 }, height: { ideal: 480 } },
+      audio: false
+    });
+    if (tentativa !== sessao) {
+      capturado.getTracks().forEach(track => track.stop());
+      return;
     }
+
+    fluxo = capturado;
+    video.srcObject = fluxo;
+    await video.play();
+  }
+
+  function pararCamera() {
+    sessao++;
+    window.clearInterval(temporizador);
+    fluxo?.getTracks().forEach(track => track.stop());
+    fluxo = null;
+    video.srcObject = null;
+    ultimaLeitura = null;
+    delete document.body.dataset.sinal;
+    quadro.hidden = true;
+    controleSinal.hidden = true;
+    abrirWebcam.textContent = 'Abrir webcam';
+    informar('Escolha a fonte de imagem.');
   }
 
   async function iniciar(origem) {
     pararCamera();
     const tentativa = sessao;
-    informar(origem === 'webcam' ? 'Aguardando a webcam…' : 'Iniciando a simulação…');
+    const usarWebcam = origem === 'webcam';
+    informar(usarWebcam ? 'Aguardando a webcam…' : 'Iniciando a simulação…');
 
     try {
-      if (origem === 'webcam') {
-        if (!navigator.mediaDevices?.getUserMedia) {
-          throw new Error('A webcam precisa de uma página segura e de permissão.');
-        }
-        const capturado = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: 'environment' }, width: { ideal: 640 }, height: { ideal: 480 } },
-          audio: false
-        });
-        if (tentativa !== sessao) {
-          capturado.getTracks().forEach(track => track.stop());
-          return;
-        }
-        fluxo = capturado;
-        video.srcObject = fluxo;
-        await video.play();
-      }
-
+      if (usarWebcam) await conectarWebcam(tentativa);
       if (tentativa !== sessao) return;
       quadro.hidden = false;
-      controleSinal.hidden = origem !== 'simulacao';
-      if (origem === 'webcam') abrirWebcam.textContent = 'Fechar webcam';
+      controleSinal.hidden = usarWebcam;
+      if (usarWebcam) abrirWebcam.textContent = 'Fechar webcam';
       analisarQuadro(origem);
       temporizador = window.setInterval(() => analisarQuadro(origem), 100);
     } catch (erro) {
@@ -186,6 +199,6 @@
     if (fluxo) pararCamera();
     else iniciar('webcam');
   });
-  document.querySelector('#simular-camera').addEventListener('click', () => iniciar('simulacao'));
+  simularCamera.addEventListener('click', () => iniciar('simulacao'));
   window.addEventListener('pagehide', pararCamera);
 })();

@@ -34,10 +34,12 @@ A proposta metodológica deste trabalho articula as duas tecnologias em fases di
 ---
 
 ## 4. Arquitetura do Protótipo Desenvolvido
-Para validar os conceitos apresentados sem barreiras de instalação, desenvolveu-se uma aplicação web responsiva (*WebXR / HTML5*) composta por dois módulos integrados:
+Para demonstrar os conceitos apresentados no navegador, a página Travessia Segura reúne dois módulos:
 
-1. **Simulador de Travessia em RV (A-Frame):** Expõe o usuário a uma via urbana tridimensional com fluxo vehicular contínuo. O sistema registra o tempo de observação antes da tomada de decisão e verifica matematicamente a posição do veículo no instante em que o pedestre inicia a travessia, classificando o desfecho em *Segura* ou *Risco de Colisão*.
-2. **Assistente de Travessia em RA (MediaDevices API + HUD):** Aciona a câmera traseira do smartphone para capturar o ambiente real e projeta uma delimitação virtual da faixa de pedestres. Mediante a simulação de aproximação de veículo em alta velocidade, a interface altera sua codificação cromática (de verde para vermelho pulsante), exibe alerta textual imediato e aciona o motor de vibração do aparelho.
+1. **Simulador de Travessia (HTML, CSS e JavaScript).** Apresenta uma via urbana desenhada com perspectiva em CSS. O sistema registra o tempo de observação e verifica a posição do veículo no instante em que o pedestre inicia a travessia, classificando o desfecho em *Segura* ou *Risco de Colisão*.
+2. **Assistente de Travessia em RA (MediaDevices API + HUD).** Solicita a câmera traseira do smartphone e desenha uma guia da faixa de pedestres sobre o vídeo. Ao acionar o botão de perigo, a demonstração mostra um alerta vermelho pulsante e solicita vibração em aparelhos compatíveis.
+
+O [Mapa da travessia](mapa-da-travessia/README.md) é o protótipo com percurso de fotos 360° em A-Frame e reconhecimento de vermelho e verde no semáforo.
 
 ---
 
