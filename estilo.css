@@ -1,0 +1,257 @@
+/* Tema adaptado de https://github.com/AnaaLuizaa-a/TrabalhoA3-RealidadeVirtual/blob/main/style.css */
+:root {
+  color-scheme: dark;
+  --fundo: #0f172a;
+  --painel: #1e293b;
+  --borda: #334155;
+  --borda-controle: #475569;
+  --texto: #f8fafc;
+  --texto-secundario: #cbd5e1;
+  --azul: #38bdf8;
+  --verde: #10b981;
+  --texto-vermelho: #ff6b6b;
+  --texto-verde: #4ade80;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: clamp(12px, 4vw, 32px);
+  font: 16px/1.45 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--texto);
+  background: radial-gradient(circle at top, var(--painel), var(--fundo));
+}
+
+body[data-sinal="vermelho"] {
+  --texto-sinal: var(--texto-vermelho);
+  background: #aa1729;
+}
+
+body[data-sinal="verde"] {
+  --texto-sinal: var(--texto-verde);
+  background: #17623c;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(14px, 3vw, 26px);
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+body[data-sinal] main {
+  background: rgba(15, 23, 42, 0.24);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+h1 { margin: 0; font-size: 1.8rem; line-height: 1.2; }
+h2 { margin: 16px 0 8px; font-size: 1.15rem; }
+p { color: var(--texto-secundario); }
+a { color: var(--azul); }
+body[data-sinal] p,
+body[data-sinal] a { color: var(--texto); }
+
+:is(button, a, select):focus-visible {
+  outline: 3px solid var(--texto);
+  outline-offset: 2px;
+}
+
+.visor {
+  position: relative;
+  height: clamp(255px, 52vh, 400px);
+  overflow: hidden;
+  border: 1px solid var(--borda-controle);
+  border-radius: 16px;
+  background: var(--fundo);
+}
+
+.visor a-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#mensagem-cena {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 16px;
+  background: var(--fundo);
+}
+
+#controles-da-foto {
+  position: absolute;
+  z-index: 1;
+  inset: auto auto 16px 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+#controles-da-foto button:disabled {
+  border-color: #64748b;
+  color: var(--texto-secundario);
+  background: var(--borda);
+  cursor: default;
+}
+
+.mapa {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  align-items: center;
+  max-width: 420px;
+  min-height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--borda-controle);
+  border-radius: 12px;
+  background: var(--fundo);
+}
+
+.rua {
+  position: absolute;
+  inset: 0 26% 0 18%;
+  background: var(--borda);
+}
+
+.rua::after {
+  content: "";
+  position: absolute;
+  inset: 22px 0;
+  background: repeating-linear-gradient(0deg, #94a3b8 0 3px, transparent 3px 6px);
+}
+
+.ilha {
+  position: absolute;
+  inset: 16px auto 16px 32.7%;
+  width: 6%;
+  background: var(--borda-controle);
+}
+
+.linha-mapa {
+  position: absolute;
+  inset: calc(50% - 2px) 7.14% auto;
+  height: 4px;
+  background: #64748b;
+}
+
+.linha-mapa::after {
+  content: "";
+  display: block;
+  width: var(--progresso, 0%);
+  height: 100%;
+  background: var(--azul);
+}
+
+button { font: inherit; cursor: pointer; touch-action: manipulation; }
+
+.ponto-mapa {
+  position: relative;
+  width: 100%;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.ponto-mapa:focus-visible { outline-offset: -4px; }
+
+.ponto-mapa::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--azul);
+  border-radius: 50%;
+  background: var(--fundo);
+}
+
+.ponto-mapa[aria-current]::before {
+  width: 23px;
+  height: 23px;
+  border-color: var(--texto);
+  background: var(--azul);
+  outline: 2px solid var(--fundo);
+}
+
+.extremos-mapa {
+  display: flex;
+  justify-content: space-between;
+  max-width: 420px;
+  margin-top: 4px;
+  font-size: .875rem;
+  color: var(--texto-secundario);
+}
+
+.local { margin: 8px 0 0; color: var(--texto); }
+.creditos { font-size: .875rem; }
+.creditos:last-child { margin-bottom: 0; }
+
+.modos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.modos button, #controles-da-foto button, select {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--borda-controle);
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--texto);
+  background: rgba(15, 23, 42, 0.9);
+}
+
+#ver-percurso[aria-pressed="true"], #simular-camera {
+  border-color: var(--azul);
+  background: #075985;
+}
+
+#ver-camera[aria-pressed="true"], #abrir-webcam {
+  border-color: var(--verde);
+  background: #065f46;
+}
+
+.modos button:active, #controles-da-foto button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+body[data-sinal] #status-ra {
+  width: fit-content;
+  max-width: 100%;
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--texto-sinal);
+  background: var(--fundo);
+}
+
+#quadro-ra, #cartao-teste {
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border: 1px solid var(--borda-controle);
+  border-radius: 12px;
+}
+
+body[data-sinal] #quadro-ra { border-color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 420px) {
+  #controles-da-foto {
+    left: 12px;
+    transform: none;
+  }
+}

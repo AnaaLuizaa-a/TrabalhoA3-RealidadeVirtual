@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa da travessia</title>
+  <link rel="stylesheet" href="estilo.css?v=2">
+  <script defer src="vendor/aframe-1.6.0.min.js"></script>
+  <script defer src="assets/panorama.js"></script>
+  <script defer src="trajeto.js"></script>
+  <script defer src="sinal-teste.js"></script>
+  <script defer src="reconhecer-sinal.js"></script>
+  <script defer src="camera.js?v=2"></script>
+</head>
+<body>
+  <main>
+    <h1>Travessia de pedestres</h1>
+    <nav class="modos" aria-label="Modo do aplicativo">
+      <button type="button" id="ver-percurso" aria-pressed="true">Percurso 360°</button>
+      <button type="button" id="ver-camera" aria-pressed="false">Câmera (RA)</button>
+    </nav>
+
+    <section id="modo-rv" aria-label="Percurso em realidade virtual">
+    <p>Arraste a foto para olhar ao redor. Use Voltar, Avançar ou clique em um ponto do minimapa.</p>
+
+    <div class="visor" aria-label="Foto panorâmica da travessia">
+      <a-scene embedded xr-mode-ui="enabled: true; enterAREnabled: false">
+        <a-sky id="panorama"></a-sky>
+        <a-camera position="0 0 0" wasd-controls-enabled="false"></a-camera>
+      </a-scene>
+      <p id="mensagem-cena" role="status">Carregando as fotos 360°…</p>
+      <div id="controles-da-foto" hidden>
+        <button type="button" id="voltar-na-foto">Voltar</button>
+        <button type="button" id="avancar-na-foto">Avançar</button>
+      </div>
+    </div>
+
+    <h2 id="titulo-mapa">Minimapa</h2>
+    <nav class="mapa" aria-labelledby="titulo-mapa">
+      <div class="rua" aria-hidden="true"></div>
+      <div class="ilha" aria-hidden="true"></div>
+      <div class="linha-mapa" aria-hidden="true"></div>
+    </nav>
+    <div class="extremos-mapa" aria-hidden="true"><span>Início</span><span>Destino</span></div>
+    <p class="local" role="status">
+      <span id="nome-do-ponto">Calçada antes da faixa</span> · <span id="numero-da-foto">1 de 7</span>
+    </p>
+    <p class="creditos">
+      Place de la République, Paris ·
+      <a href="https://api.panoramax.xyz/?focus=pic&amp;nav=seq&amp;pic=ff49dc6f-c5ef-4aaa-bb76-78ffcb1c2662">Carto’Cité / Panoramax</a> ·
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
+    </p>
+    </section>
+
+    <section id="modo-ra" aria-labelledby="titulo-ra" hidden>
+      <h2 id="titulo-ra">Semáforo de pedestres</h2>
+      <p>Enquadre a luz e a moldura escura do semáforo no retângulo central. Para testar nesta tela, use a simulação.</p>
+      <div class="modos">
+        <button type="button" id="abrir-webcam">Abrir webcam</button>
+        <button type="button" id="simular-camera">Simular câmera</button>
+        <a href="sinal-teste.html" target="_blank" rel="noopener">Semáforo de teste</a>
+      </div>
+      <p id="status-ra" role="status">Escolha a fonte de imagem.</p>
+      <canvas id="quadro-ra" width="640" height="480" aria-label="Imagem com a leitura do semáforo" hidden></canvas>
+      <p id="controle-do-sinal" hidden>
+        <label for="luz-simulada">Luz de teste</label>
+        <select id="luz-simulada">
+          <option value="vermelho">Vermelha</option>
+          <option value="verde">Verde</option>
+          <option value="apagado">Apagada</option>
+        </select>
+      </p>
+      <video id="video-da-webcam" autoplay muted playsinline hidden></video>
+    </section>
+  </main>
+</body>
+</html>

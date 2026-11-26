@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semáforo de teste</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script defer src="sinal-teste.js"></script>
+</head>
+<body>
+  <main>
+    <h1>Semáforo de teste</h1>
+    <p>Mostre o semáforo em outra tela e aponte a webcam para a luz.</p>
+    <canvas id="cartao-teste" width="440" height="210" aria-label="Semáforo de teste com luz vermelha e verde"></canvas>
+    <p>
+      <label for="luz-do-cartao">Luz de teste</label>
+      <select id="luz-do-cartao">
+        <option value="vermelho">Vermelha</option>
+        <option value="verde">Verde</option>
+        <option value="apagado">Apagada</option>
+      </select>
+      <a id="salvar-cartao" download="semaforo-de-teste.png">Salvar imagem</a>
+    </p>
+  </main>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.querySelector('#cartao-teste');
+      const luz = document.querySelector('#luz-do-cartao');
+      const salvar = document.querySelector('#salvar-cartao');
+      function atualizarCartao() {
+        desenharSinalTeste(canvas.getContext('2d'), luz.value);
+        salvar.href = canvas.toDataURL('image/png');
+      }
+
+      luz.addEventListener('change', atualizarCartao);
+      atualizarCartao();
+    });
+  </script>
+</body>
+</html>
