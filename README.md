@@ -1,6 +1,6 @@
 # A3 — Mapa da travessia
 
-Abra [index.html](index.html) no Chrome e escolha **Percurso 360°** ou **Câmera (RA)**. As duas partes funcionam localmente.
+Abra [site]([https://anaaluizaa-a.github.io/TrabalhoA3-RealidadeVirtual/]) no Chrome e escolha **Percurso 360°** ou **Câmera (RA)**. As duas partes funcionam localmente.
 
 - **Percurso 360°.** Arraste para olhar ao redor. Use **Voltar** e **Avançar** na própria foto. O ponto azul do minimapa indica a posição atual. Os sete pontos são clicáveis.
 - **Câmera (RA).** Clique em **Abrir webcam** e autorize o acesso. Enquadre a luz acesa e a caixa escura do semáforo no retângulo central. O aplicativo desenha o resultado ao lado da luz encontrada. Para testar com outra tela, abra o [semáforo de teste](sinal-teste.html) e alterne a luz. **Simular câmera** usa um semáforo desenhado na própria página e passa seus quadros pelo mesmo reconhecimento. **Fechar webcam** e **Percurso 360°** encerram a captura.
