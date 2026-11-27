@@ -27,9 +27,9 @@ Fotos de **Carto'Cité**, capturadas em **17/10/2023**, via Panoramax (OpenStree
 ## Integrantes do Grupo
 
 - Ana Luiza Mattos de Carvalho - 124114111
-- Camila
+- Camila Ferreira dos Santos - 124117665
 - Julia Starling Negrini Fudoli - 124222027
-- Samuel Zappalá Batista - 
+- Samuel Zappalá Batista - 12411504
 
 ## Referências
 
